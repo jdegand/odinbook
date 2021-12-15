@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <%- include('partials/navbar.ejs') %>
+  <div>
+    <% if (users) {%>
+    <table>
+        <% for(var i=0; i < users.length; i++) { %>
+            <% if (users[i].id === user.id) {%>
+                <div></div>
+              <% } else { %>
+            <tr>
+                <td>User id: <a href="/users/<%= users[i].id %>"><%= users[i].id %></a></td>
+                <td>User username: <%= users[i].username %></td>
+            </tr>
+          </table>
+            <form action="<%= `/users/${users[i].id}` %>" method="post">
+              <input type="hidden" name="status" value="Pending"> 
+              <button type="submit">Send Friend Request</button>
+          </form>
+          <% } %>
+      
+ 
+    <% } %>
+
+    <% } %>
+    </div>
+</body>
+</html>

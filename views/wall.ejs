@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall</title>
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %>
+    <h1>WELCOME BACK <%= user.username %></h1>
+
+    <form action="/wall" method="post">
+        <textarea type="text" maxlength="100" name="body" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    <% if (posts) {%>
+                   
+        <% posts.forEach( post => { %>
+            <table>
+                <tr>
+                    <td><%= JSON.stringify(post) %></td>
+                </tr>
+                <tr>
+                    <td>User: <%= post.author.username %></td>
+                </tr>
+                <tr>
+                    <td>Post: <%= post.body %></td>
+                </tr>
+                <tr>
+                    <td>Likes: <%= post.likes %></td>
+                </tr>
+                <tr>
+                    <td>Comments: <%= post.comments.length %></td>
+                </tr>
+                <% post.comments.forEach( comment => { %>
+                <tr>
+                    <td>Comment: <%= comment.content %></td>
+                </tr>
+                <tr>
+                    <td>Posted: <%= comment.date %></td>
+                </tr>
+                <% }) %>
+                <tr>
+                    <td>View More: <a href="<%= `/wall/${post._id}` %>">See More</a></td>
+                </tr>
+              
+            </table>
+
+              
+            <form action="<%= `/wall/${post._id}/update` %>" method="post">
+                <input type="hidden" name="likes" value="1">
+                <button type="submit">Like</button>
+            </form>
+
+            <form action="<%= `/wall/${post._id}/comments` %>" method="post">
+                <textarea type="text" maxlength="100" name="content" placeholder="Add comment here" required></textarea>
+                 
+                <button type="submit">Submit</button>
+            </form>
+
+
+            <form action="<%= `/wall/${post._id}/delete` %>" method="post">
+                <button type="submit">Delete</button>
+            </form>
+
+            <% }) %>
+        <% } %>
+
+
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<%- include('partials/navbar.ejs') %>
+
+    <% if (userId) {%>
+    <table>
+        <tr>
+            <td>User id: <%= userId.id %></td>
+            <td>User username: <%= userId.username %></td>
+        </tr>
+    </table>
+
+    <% if(userId.id === user.id) { %>
+
+        <% if(userId.requests.length) { %>
+            <pre><%= JSON.stringify(userId.requests, null, 2) %></pre>
+    
+            <form action="/users/<%= userId.id %>/update" method="POST">
+                <label for="Accept">Accept</label>
+                <input id="Accept" type="radio" name="status" value="Accept">
+                <label for="Reject">Reject</label>
+                <input id="Reject" type="radio" name="status" value="Reject">
+                <button type="submit">Update Status</button>
+            </form>
+        <% } %>
+    <% } %>
+
+    <% } %>
+</div>
